@@ -1,0 +1,59 @@
+datasource db {
+  provider = "postgresql"
+  
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Post {
+  id          String   @id @default(uuid())
+  title       String?
+  content     String   @db.Text
+  mediaUrl    String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Resource {
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  fileUrl      String
+  type         String
+  thumbnailUrl String
+  videoUrl     String?  
+  createdAt    DateTime @default(now())
+  category     String   @default("Spiritual")
+}
+
+model Leader {
+  id          String   @id @default(uuid())
+  name        String
+  photoUrl    String
+  department  String
+  yearStarted Int
+  yearEnded   Int
+  biography   String   @db.Text
+  isCurrent   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Setting {
+  id           String @id @default("global_config")
+  aboutEnglish String @db.Text
+  aboutAmharic String @db.Text
+  telegramUrl  String @default("")
+  instagramUrl String @default("")
+  facebookUrl  String @default("")
+  youtubeUrl   String @default("")
+  linkedinUrl  String @default("")
+}
