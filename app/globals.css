@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Bold Amharic";
+  src: url("/bold_1.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  unicode-range: U+1200-137F;
+  font-display: swap;
+}
+
+.amharic-font {
+  font-family: "Bold Amharic", ui-sans-serif, system-ui, sans-serif;
+}
+
 body {
   background-color: #f8fafc; /* Standardizing light slate bg across all views */
   color: #1e293b;
