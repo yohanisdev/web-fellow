@@ -1,0 +1,16 @@
+.video-container {
+    position: relative; /* Set parent to relative */
+    width: 100%; /* Set desired width */
+    height: 400px; /* Set desired height */
+   
+}
+
+.video-player {
+    position: absolute; /* Position video absolutely within parent */
+    bottom: 0px; /* Align to bottom */
+    right: 0px; /* Align to right */
+    margin-right: 0;
+  
+    transform: translate(120px,80px);
+
+}

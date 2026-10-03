@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 
-// 🔽 ADDED: GET handler to look up resources for both public filters and management drawers
+//  ADDED: GET handler to look up resources for both public filters and management drawers
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// 📄 KEEPING YOUR ORIGINAL POST LOGIC COMPLETELY INTACT:
+//  KEEPING YOUR ORIGINAL POST LOGIC COMPLETELY INTACT:
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();

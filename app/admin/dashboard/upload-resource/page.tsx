@@ -1,5 +1,6 @@
 "use client";
 
+import Icon from "@/components/Icon";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -7,7 +8,7 @@ export default function UploadResourcePage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   
-  // 🔽 CHANGED: Updated default value to match our new strict categories
+  //  CHANGED: Updated default value to match our new strict categories
   const [category, setCategory] = useState("Spiritual"); 
   
   const [description, setDescription] = useState("");
@@ -22,7 +23,7 @@ export default function UploadResourcePage() {
 
     // Extra frontend safety check to enforce PDFs only
     if (selectedFile.type !== "application/pdf" && !selectedFile.name.endsWith(".pdf")) {
-      setStatusMessage("❌ Error: Only PDF files are allowed.");
+      setStatusMessage("Error: Only PDF files are allowed.");
       return;
     }
 
@@ -45,7 +46,7 @@ export default function UploadResourcePage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to commit resource asset.");
 
-      setStatusMessage("✅ Success! Document added to the digital repository.");
+      setStatusMessage("Success! Document added to the digital repository.");
       
       setTimeout(() => {
         router.push("/admin/dashboard");
@@ -53,7 +54,7 @@ export default function UploadResourcePage() {
       }, 1500);
 
     } catch (err: any) {
-      setStatusMessage(`❌ Error: ${err.message}`);
+      setStatusMessage(`Error: ${err.message}`);
       setLoading(false);
     }
   };
@@ -66,7 +67,7 @@ export default function UploadResourcePage() {
 
         {statusMessage && (
           <div className="mb-6 text-center text-sm font-semibold p-3 bg-slate-50 rounded-xl border border-slate-200">
-            {statusMessage}
+            {<>{(statusMessage.includes("Success") || statusMessage.includes("successfully")) && <Icon name="check" className="inline mr-2" size={16} />}{(statusMessage.startsWith("Error") || statusMessage.startsWith("Validation")) && <Icon name="alert" className="inline mr-2" size={16} />}{statusMessage}</>}
           </div>
         )}
 
@@ -86,7 +87,7 @@ export default function UploadResourcePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Classification Category</label>
-              {/* 🔽 CHANGED: Category options are now strictly Academic or Spiritual */}
+              {/*  CHANGED: Category options are now strictly Academic or Spiritual */}
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -122,18 +123,18 @@ export default function UploadResourcePage() {
           </div>
 
           <div>
-            {/* 🔽 CHANGED: Text updated to specify PDF only */}
+            {/*  CHANGED: Text updated to specify PDF only */}
             <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Select Document File (PDF Only)</label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-fellowship-blue transition-colors">
               <div className="space-y-1 text-center">
-                <span className="text-2xl block">📄</span>
+                <span className="text-2xl block"><Icon name="file" /></span>
                 <div className="flex text-sm text-slate-600">
                   <label htmlFor="doc-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-fellowship-blue hover:text-fellowship-blue-dark focus-within:outline-none">
                     <span>Click to look up document archive</span>
                     <input 
                       id="doc-upload" 
                       type="file" 
-                      // 🔽 CHANGED: Restricts system file picker to only display PDF files
+                      //  CHANGED: Restricts system file picker to only display PDF files
                       accept="application/pdf"
                       className="sr-only" 
                       onChange={(e) => {
@@ -146,7 +147,7 @@ export default function UploadResourcePage() {
                 </div>
                 {selectedFile && (
                   <p className="text-xs bg-amber-50 text-amber-800 font-bold py-1 px-2 rounded-md inline-block mt-2">
-                    📎 File Ready: {selectedFile.name}
+                    <Icon name="paperclip" className="inline mr-1" size={14} />File Ready: {selectedFile.name}
                   </p>
                 )}
               </div>

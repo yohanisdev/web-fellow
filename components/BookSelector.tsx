@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Icon from '@/components/Icon';
 import { BibleVersion, BibleBook } from '../types/bible';
 
 interface BookSelectorProps {
@@ -48,13 +49,16 @@ export default function BookSelector({
         </label>
         
         {/* Simple Type-to-Filter Text Box */}
-        <input
-          type="text"
-          value={versionSearch}
-          onChange={(e) => setVersionSearch(e.target.value)}
-          placeholder="🔍 Search (e.g., 'Amharic', 'KJV')..."
-          className="w-full mb-2 p-1.5 text-xs border border-gray-200 rounded bg-slate-50 text-black outline-none focus:border-slate-400 font-medium"
-        />
+        <div className="relative mb-2">
+          <Icon name="search" className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
+          <input
+            type="text"
+            value={versionSearch}
+            onChange={(e) => setVersionSearch(e.target.value)}
+            placeholder="Search (e.g., 'Amharic', 'KJV')..."
+            className="w-full p-1.5 pl-7 text-xs border border-gray-200 rounded bg-slate-50 text-black outline-none focus:border-slate-400 font-medium"
+          />
+        </div>
 
         <select
           value={selectedVersion}

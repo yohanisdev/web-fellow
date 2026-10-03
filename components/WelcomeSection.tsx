@@ -7,7 +7,8 @@ import gsap from "gsap";
 const BACKGROUND_IMAGES = [
   "/welcome/IMG_20260708_134447_415.jpg", // Example: Campus/Education theme
   "/welcome/photo_2026-07-08_21-00-44.jpg", // Example: Fellowship/Group theme
-  "/welcome/photo_2026-07-08_21-01-01.jpg"  // Example: University building theme
+  "/welcome/photo_2026-07-08_21-01-01.jpg",  // Example: University building theme
+  "/welcome/20260929_081029.jpg"
 ];
 
 export default function WelcomeSection() {
@@ -18,50 +19,127 @@ export default function WelcomeSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % BACKGROUND_IMAGES.length);
-    }, 5000); // Changes image every 5 seconds
+    }, 7000); // Changes image every 5 seconds
 
     return () => clearInterval(timer);
   }, []);
 
-  // 2. Core GSAP Animations
+    // 2. Core GSAP Animations
   useEffect(() => {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      const mainTimeline = gsap.timeline();
+      const mainTimeline = gsap.timeline({
+        defaults: {
+          ease: "power3.out",
+        },
+      });
 
-      // Core Background Circle Entrance Animation
-      mainTimeline.fromTo("#bg-circle", 
-        { scale: 0, opacity: 0, transformOrigin: "50% 50%" },
-        { scale: 1, opacity: 1, rotation: 360, duration: 1.2, ease: "expo.out" }
+      // -----------------------------------------
+      // 1. Background circle — soft cinematic reveal
+      // -----------------------------------------
+      mainTimeline.fromTo(
+        "#bg-circle",
+        {
+          scale: 0.82,
+          opacity: 0,
+          transformOrigin: "50% 50%",
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 1.4,
+          ease: "power3.out",
+        }
       );
 
-      // Sequential Staggered Pop for Emblem Components
-      mainTimeline.fromTo(".emblem-path",
-        { scale: 1.6, opacity: 0, filter: "blur(10px) brightness(2)", transformOrigin: "50% 50%" },
-        { scale: 1, opacity: 1, filter: "blur(0px) brightness(1)", duration: 0.9, ease: "power3.out", stagger: 0.15 },
-        "-=0.6"
+      // -----------------------------------------
+      // 2. Emblem — elegant floating reveal
+      // -----------------------------------------
+      mainTimeline.fromTo(
+        ".emblem-path",
+        {
+          opacity: 0,
+          y: 18,
+          scale: 0.94,
+          filter: "blur(6px)",
+          transformOrigin: "50% 50%",
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 1.15,
+          stagger: 0.12,
+          ease: "power3.out",
+        },
+        "-=0.8"
       );
 
-      // Staggered Typing Reveal for Alphabet Characters
-      mainTimeline.fromTo(".text-path",
-        { y: -25, opacity: 0, scale: 0.6, transformOrigin: "50% 50%" },
-        { y: 0, opacity: 1, scale: 1, stagger: 0.05, duration: 0.45, ease: "back.out(2)" },
-        "-=0.4"
+      // -----------------------------------------
+      // 3. Letters — smooth cinematic reveal
+      // -----------------------------------------
+      mainTimeline.fromTo(
+        ".text-path",
+        {
+          opacity: 0,
+          y: 14,
+          scale: 0.96,
+          filter: "blur(3px)",
+          transformOrigin: "50% 50%",
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 0.75,
+          stagger: 0.07,
+          ease: "power2.out",
+        },
+        "-=0.65"
       );
 
-      // Subtle Slide Reveal for Descriptions
-      mainTimeline.fromTo(".welcome-text-fade",
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.75, stagger: 0.15, ease: "power2.out" },
-        "-=0.3"
+      // -----------------------------------------
+      // 4. Subtle final logo breathing effect
+      // -----------------------------------------
+      mainTimeline.to(
+        ".emblem-path",
+        {
+          y: -2,
+          duration: 1.8,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: 1,
+        },
+        "+=0.15"
+      );
+
+      // -----------------------------------------
+      // 5. Text/content reveal
+      // -----------------------------------------
+      mainTimeline.fromTo(
+        ".welcome-text-fade",
+        {
+          opacity: 0,
+          y: 12,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power2.out",
+        },
+        "-=1.4"
       );
 
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
-
+  
   return (
     <div 
       ref={containerRef} 
@@ -82,7 +160,7 @@ export default function WelcomeSection() {
 
       {/* ================= PROFESSIONAL BLUE OVERLAY LAYER ================= */}
       {/* Combines a rich dark blue/slate tone with low opacity (85%) to let images through elegantly */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-br from-[#09152e]/90 via-[#050c1b]/85 to-[#02050c]/95 mix-blend-multiply" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-br from-[#09152e]/90 via-[#050c1b]/75 to-[#02050c]/95 mix-blend-multiply" />
 
       {/* ================= CONTENT LAYER ================= */}
       {/* Added relative and z-20 to ensure text and SVGs stay cleanly above the background layer */}
@@ -159,9 +237,11 @@ export default function WelcomeSection() {
           <p className="welcome-text-fade opacity-0 mt-5 text-sm md:text-base text-slate-200 leading-relaxed max-w-xl mx-auto lg:mx-0 drop-shadow-sm">
             የ ሰላም አምላክ ራሱ ሁለንተናቹን ይቀድስ ፤ መንፈሳቹ ፤ነፍሳቹና ስጋቹ ጌታችን እየሱስ ክርስቶስ በምመጣበት ግዘ ያለ ነቀፋ ይጠበቁ።
           </p>
+        
         </div>
-
+         
       </div>
     </div>
+    
   );
 }

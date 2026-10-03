@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "@/components/Icon";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 
@@ -26,7 +27,7 @@ export default async function PublicResourcesPage() {
 
       {resources.length === 0 ? (
         <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm max-w-md mx-auto">
-          <span className="text-4xl">📚</span>
+          <span className="text-4xl"><Icon name="book" size={36} /></span>
           <h3 className="mt-4 text-sm font-bold text-slate-900">No resources available</h3>
           <p className="mt-1 text-xs text-slate-500">Check back later for newly published digital assets.</p>
         </div>
@@ -70,7 +71,7 @@ export default async function PublicResourcesPage() {
                   rel="noopener noreferrer"
                   className="block w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 text-xs rounded-xl transition-colors shadow-xs"
                 >
-                  📥 Download Material
+                  <Icon name="download" className="inline mr-2" size={16} />Download Material
                 </a>
               </div>
             </div>

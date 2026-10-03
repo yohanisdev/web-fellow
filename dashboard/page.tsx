@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import Icon from "@/components/Icon";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function AdminDashboardPage() {
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
           <div>
             <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center font-bold text-lg mb-4">
-              📢
+              <Icon name="megaphone" />
             </div>
             <h3 className="text-lg font-bold text-slate-900 mb-1">
               Announcements Feed
@@ -58,7 +59,7 @@ export default function AdminDashboardPage() {
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
           <div>
             <div className="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center font-bold text-lg mb-4">
-              📚
+              <Icon name="book" />
             </div>
             <h3 className="text-lg font-bold text-slate-900 mb-1">
               Resource Repository
@@ -76,7 +77,7 @@ export default function AdminDashboardPage() {
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
           <div>
             <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-lg mb-4">
-              👥
+              <Icon name="users" />
             </div>
             <h3 className="text-lg font-bold text-slate-900 mb-1">
               Leadership Registry

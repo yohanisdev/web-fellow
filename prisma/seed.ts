@@ -9,7 +9,7 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log("🌱 Starting database seeding process...");
+  console.log("Starting database seeding process...");
 
   // 1. Wipe existing data to avoid unique ID collision errors on repeated runs
   await prisma.post.deleteMany({});
@@ -26,7 +26,7 @@ async function main() {
       passwordHash: passwordHash,
     },
   });
-  console.log("✅ Created default admin user: admin@juacevasue.org");
+  console.log("SUCCESS: Created default admin user: admin@juacevasue.org");
 
   // 3. Inject mock announcements into the Post table
   await prisma.post.createMany({
@@ -44,14 +44,14 @@ async function main() {
       },
     ],
   });
-  console.log("✅ Seeded sample feed announcements.");
+  console.log("SUCCESS: Seeded sample feed announcements.");
   
-  console.log("\n🚀 Seeding completed successfully!");
+  console.log("\nSUCCESS: Seeding completed successfully!");
 }
 
 main()
   .catch((e) => {
-    console.error("❌ Seeding encountered an error:", e);
+    console.error("ERROR: Seeding encountered an error:", e);
     process.exit(1);
   })
   .finally(async () => {

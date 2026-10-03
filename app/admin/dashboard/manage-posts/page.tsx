@@ -1,12 +1,13 @@
 "use client";
 
+import Icon from "@/components/Icon";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Post {
   id: string;
   title: string;
-  content: string; // ✅ Properly mapped to match your Prisma model field
+  content: string; // Properly mapped to match your Prisma model field
 }
 
 export default function ManagePostsPage() {
@@ -22,7 +23,7 @@ export default function ManagePostsPage() {
       const data = await res.json();
       setPosts(data);
     } catch (err: any) {
-      setMessage(`❌ Error loading posts: ${err.message}`);
+      setMessage(`Error loading posts: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -40,10 +41,10 @@ export default function ManagePostsPage() {
       const res = await fetch(`/api/posts/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Could not execute delete command.");
       
-      setMessage("✅ Post deleted successfully.");
+      setMessage("Post deleted successfully.");
       setPosts((prev) => prev.filter((item) => item.id !== id));
     } catch (err: any) {
-      setMessage(`❌ Error: ${err.message}`);
+      setMessage(`Error: ${err.message}`);
     }
   };
 
@@ -69,7 +70,7 @@ export default function ManagePostsPage() {
 
       {message && (
         <div className="mb-4 text-center text-xs font-bold p-3 bg-slate-100 rounded-xl border border-slate-200">
-          {message}
+          {<>{(message.includes("Success") || message.includes("successfully")) && <Icon name="check" className="inline mr-2" size={16} />}{(message.startsWith("Error") || message.startsWith("Validation")) && <Icon name="alert" className="inline mr-2" size={16} />}{message}</>}
         </div>
       )}
 
@@ -87,14 +88,14 @@ export default function ManagePostsPage() {
             <div key={post.id} className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
               <div className="max-w-2xl">
                 <h3 className="text-sm font-bold text-slate-950">{post.title}</h3>
-                {/* 🌟 FIXED: Changed post.description to post.content */}
+                {/*  FIXED: Changed post.description to post.content */}
                 <p className="text-slate-400 text-xs truncate mt-1">{post.content}</p>
               </div>
               <button
                 onClick={() => handleDelete(post.id)}
                 className="px-3 py-1.5 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-600 hover:text-white border border-red-100 rounded-xl transition-all"
               >
-                🗑️ Delete
+                <Icon name="trash" className="inline mr-1" size={14} />Delete
               </button>
             </div>
           ))}

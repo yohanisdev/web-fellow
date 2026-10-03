@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "@/components/Icon";
 import { prisma } from "@/lib/prisma";
 
 // Forces Next.js to pull fresh database records from PostgreSQL on every page request
@@ -27,7 +28,7 @@ export default async function PublicLeadersPage() {
       {/* Conditional Rendering based on Database Records */}
       {leaders.length === 0 ? (
         <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm max-w-md mx-auto">
-          <span className="text-4xl">👥</span>
+          <span className="text-4xl"><Icon name="users" size={36} /></span>
           <h3 className="mt-4 text-sm font-bold text-slate-900">Registry is empty</h3>
           <p className="mt-1 text-xs text-slate-500">
             No active leadership profiles have been committed to the database yet.

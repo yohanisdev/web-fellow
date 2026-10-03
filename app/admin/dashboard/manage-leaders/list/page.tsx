@@ -1,13 +1,14 @@
 "use client";
 
+import Icon from "@/components/Icon";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Leader {
   id: string;
   name: string;
-  department: string; // 🌟 FIXED: Changed from role
-  biography?: string;  // 🌟 FIXED: Changed from description
+  department: string; //  FIXED: Changed from role
+  biography?: string;  //  FIXED: Changed from description
 }
 
 export default function ManageLeadersListPage() {
@@ -23,7 +24,7 @@ export default function ManageLeadersListPage() {
       const data = await res.json();
       setLeaders(Array.isArray(data) ? data : []);
     } catch (err: any) {
-      setMessage(`❌ Error loading leaders: ${err.message}`);
+      setMessage(`Error loading leaders: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -41,10 +42,10 @@ export default function ManageLeadersListPage() {
       const res = await fetch(`/api/leaders/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Could not execute delete command.");
       
-      setMessage("✅ Leader dropped successfully from registry.");
+      setMessage("Leader dropped successfully from registry.");
       setLeaders((prev) => prev.filter((item) => item.id !== id));
     } catch (err: any) {
-      setMessage(`❌ Error: ${err.message}`);
+      setMessage(`Error: ${err.message}`);
     }
   };
 
@@ -70,7 +71,7 @@ export default function ManageLeadersListPage() {
 
       {message && (
         <div className="mb-4 text-center text-xs font-bold p-3 bg-slate-100 rounded-xl border border-slate-200">
-          {message}
+          {<>{(message.includes("Success") || message.includes("successfully")) && <Icon name="check" className="inline mr-2" size={16} />}{(message.startsWith("Error") || message.startsWith("Validation")) && <Icon name="alert" className="inline mr-2" size={16} />}{message}</>}
         </div>
       )}
 
@@ -89,12 +90,12 @@ export default function ManageLeadersListPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm font-bold text-slate-950">{leader.name}</h3>
-                  {/* 🌟 FIXED: Reading leader.department */}
+                  {/*  FIXED: Reading leader.department */}
                   <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
                     {leader.department}
                   </span>
                 </div>
-                {/* 🌟 FIXED: Reading leader.biography */}
+                {/*  FIXED: Reading leader.biography */}
                 {leader.biography && (
                   <p className="text-slate-400 text-xs truncate max-w-xl mt-1">{leader.biography}</p>
                 )}
@@ -103,7 +104,7 @@ export default function ManageLeadersListPage() {
                 onClick={() => handleDelete(leader.id)}
                 className="px-3 py-1.5 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-600 hover:text-white border border-red-100 rounded-xl transition-all"
               >
-                🗑️ Delete
+                <Icon name="trash" className="inline mr-1" size={14} />Delete
               </button>
             </div>
           ))}

@@ -1,5 +1,6 @@
 "use client";
 
+import Icon from "@/components/Icon";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -35,7 +36,7 @@ export default function CreatePostPage() {
 
       if (!res.ok) throw new Error(data.error || "Failed to compile post metadata.");
 
-      setStatusMessage("✅ Success! Announcement published with image attachment.");
+      setStatusMessage("Success! Announcement published with image attachment.");
       
       setTimeout(() => {
         router.push("/admin/dashboard");
@@ -43,7 +44,7 @@ export default function CreatePostPage() {
       }, 1500);
 
     } catch (err: any) {
-      setStatusMessage(`❌ Error: ${err.message}`);
+      setStatusMessage(`Error: ${err.message}`);
       setLoading(false);
     }
   };
@@ -56,7 +57,7 @@ export default function CreatePostPage() {
 
         {statusMessage && (
           <div className="mb-6 text-center text-sm font-semibold p-3 bg-slate-50 rounded-xl border border-slate-200">
-            {statusMessage}
+            {<>{(statusMessage.includes("Success") || statusMessage.includes("successfully")) && <Icon name="check" className="inline mr-2" size={16} />}{(statusMessage.startsWith("Error") || statusMessage.startsWith("Validation")) && <Icon name="alert" className="inline mr-2" size={16} />}{statusMessage}</>}
           </div>
         )}
 
@@ -77,7 +78,7 @@ export default function CreatePostPage() {
             <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Upload Layout Image</label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-fellowship-blue transition-colors">
               <div className="space-y-1 text-center">
-                <span className="text-2xl block">🖼️</span>
+                <span className="text-2xl block"><Icon name="image" /></span>
                 <div className="flex text-sm text-slate-600">
                   <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-fellowship-blue hover:text-fellowship-blue-dark focus-within:outline-none">
                     <span>Select a file from your computer</span>
@@ -98,7 +99,7 @@ export default function CreatePostPage() {
                 <p className="text-xs text-slate-400">PNG, JPG, or GIF up to 10MB</p>
                 {selectedFile && (
                   <p className="text-xs bg-emerald-50 text-emerald-700 font-bold py-1 px-2 rounded-md inline-block mt-2">
-                    📂 Target Attachment: {selectedFile.name}
+                    <Icon name="folder" className="inline mr-1" size={14} />Target Attachment: {selectedFile.name}
                   </p>
                 )}
               </div>

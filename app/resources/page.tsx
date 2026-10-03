@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "@/components/Icon";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
@@ -63,7 +64,7 @@ export default async function PublicResourcesPage({ searchParams }: Props) {
 
       {resources.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-3xl border border-slate-100 shadow-sm max-w-xl mx-auto">
-          <span className="text-5xl block mb-5">📂</span>
+          <span className="text-5xl block mb-5"><Icon name="folder" size={48} /></span>
           <h3 className="text-lg font-bold text-slate-950">Archive category empty</h3>
           <p className="mt-1 text-sm text-slate-500">
             There are currently no listed {activeFilter.toLowerCase()} resources. Check back soon.
@@ -79,7 +80,7 @@ export default async function PublicResourcesPage({ searchParams }: Props) {
               } hover:border-slate-200 hover:bg-white`}
             >
               
-              {/* 1. 🔄 LEFT SIDE: The Visual Cover (Small Scale) */}
+              {/* 1.  LEFT SIDE: The Visual Cover (Small Scale) */}
               <div className="flex-shrink-0 relative group">
                 <div className="w-20 h-28 bg-slate-200 rounded-lg overflow-hidden shadow-md border-2 border-white group-hover:shadow-lg transition-shadow">
                   <img
@@ -94,7 +95,7 @@ export default async function PublicResourcesPage({ searchParams }: Props) {
                 </div>
               </div>
 
-              {/* 2. 🔄 MIDDLE: The Metadata (Info) Block */}
+              {/* 2.  MIDDLE: The Metadata (Info) Block */}
               <div className="flex-grow pl-2 pr-6">
                 <div className="flex items-center gap-3 mb-2">
                   {/* Category Badge */}
@@ -116,7 +117,7 @@ export default async function PublicResourcesPage({ searchParams }: Props) {
                 </p>
               </div>
 
-              {/* 3. 🔄 RIGHT SIDE: The Action Button */}
+              {/* 3.  RIGHT SIDE: The Action Button */}
               <div className="flex-shrink-0 w-44 pl-6 border-l border-slate-200">
                 <a
                   href={resource.fileUrl}
@@ -125,7 +126,7 @@ export default async function PublicResourcesPage({ searchParams }: Props) {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 text-xs rounded-xl transition-colors shadow-sm"
                 >
-                  <span className="text-sm">📥</span>
+                  <span className="text-sm"><Icon name="download" size={16} /></span>
                   Download PDF
                 </a>
               </div>

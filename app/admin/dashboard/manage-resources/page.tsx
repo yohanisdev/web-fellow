@@ -1,5 +1,6 @@
 "use client";
 
+import Icon from "@/components/Icon";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -23,7 +24,7 @@ export default function ManageResourcesPage() {
       const data = await res.json();
       setResources(data);
     } catch (err: any) {
-      setMessage(`❌ Error loading resources: ${err.message}`);
+      setMessage(`Error loading resources: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -41,10 +42,10 @@ export default function ManageResourcesPage() {
       const res = await fetch(`/api/resources/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Could not execute delete command.");
       
-      setMessage("✅ Resource deleted successfully.");
+      setMessage("Resource deleted successfully.");
       setResources((prev) => prev.filter((item) => item.id !== id));
     } catch (err: any) {
-      setMessage(`❌ Error: ${err.message}`);
+      setMessage(`Error: ${err.message}`);
     }
   };
 
@@ -70,7 +71,7 @@ export default function ManageResourcesPage() {
 
       {message && (
         <div className="mb-4 text-center text-xs font-bold p-3 bg-slate-100 rounded-xl border border-slate-200">
-          {message}
+          {<>{(message.includes("Success") || message.includes("successfully")) && <Icon name="check" className="inline mr-2" size={16} />}{(message.startsWith("Error") || message.startsWith("Validation")) && <Icon name="alert" className="inline mr-2" size={16} />}{message}</>}
         </div>
       )}
 
@@ -101,7 +102,7 @@ export default function ManageResourcesPage() {
                 onClick={() => handleDelete(resource.id)}
                 className="px-3 py-1.5 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-600 hover:text-white border border-red-100 rounded-xl transition-all"
               >
-                🗑️ Delete
+                <Icon name="trash" className="inline mr-1" size={14} />Delete
               </button>
             </div>
           ))}

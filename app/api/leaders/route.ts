@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 
-// 🔽 ADDED: GET handler to pull leaders for your management list page
+//  ADDED: GET handler to pull leaders for your management list page
 export async function GET(request: NextRequest) {
   try {
     const leaders = await prisma.leader.findMany({
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// 📄 KEEPING YOUR ORIGINAL POST LOGIC COMPLETELY INTACT:
+//  KEEPING YOUR ORIGINAL POST LOGIC COMPLETELY INTACT:
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();

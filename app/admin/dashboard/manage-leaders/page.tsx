@@ -1,5 +1,6 @@
 "use client";
 
+import Icon from "@/components/Icon";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +21,7 @@ export default function ManageLeadersPage() {
     setStatus("");
 
     if (email && !email.toLowerCase().endsWith("@gmail.com")) {
-      setStatus("❌ Validation Error: Account section only accepts native Google accounts ending with @gmail.com");
+      setStatus("Validation Error: Account section only accepts native Google accounts ending with @gmail.com");
       setLoading(false);
       return;
     }
@@ -44,13 +45,13 @@ export default function ManageLeadersPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to finalize leadership initialization record.");
 
-      setStatus("✅ Success! Leader deployment profile committed to the system.");
+      setStatus("Success! Leader deployment profile committed to the system.");
       setTimeout(() => {
         router.push("/admin/dashboard");
         router.refresh();
       }, 1500);
     } catch (err: any) {
-      setStatus(`❌ Error: ${err.message}`);
+      setStatus(`Error: ${err.message}`);
       setLoading(false);
     }
   };
@@ -63,7 +64,7 @@ export default function ManageLeadersPage() {
 
         {status && (
           <div className="mb-6 text-center text-sm font-semibold p-3 bg-slate-50 rounded-xl border border-slate-200">
-            {status}
+            {<>{(status.includes("Success") || status.includes("successfully")) && <Icon name="check" className="inline mr-2" size={16} />}{(status.startsWith("Error") || status.startsWith("Validation")) && <Icon name="alert" className="inline mr-2" size={16} />}{status}</>}
           </div>
         )}
 
@@ -137,7 +138,7 @@ export default function ManageLeadersPage() {
             <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Profile Photo Upload</label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-slate-900 transition-colors">
               <div className="space-y-1 text-center">
-                <span className="text-2xl block">📸</span>
+                <span className="text-2xl block"><Icon name="camera" /></span>
                 <div className="flex text-sm text-slate-600">
                   <label htmlFor="avatar-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-slate-900 hover:text-slate-700 focus-within:outline-none">
                     <span>Look up image asset file</span>
@@ -156,7 +157,7 @@ export default function ManageLeadersPage() {
                 </div>
                 {selectedImage && (
                   <p className="text-xs bg-emerald-50 text-emerald-800 font-bold py-1 px-2 rounded-md inline-block mt-2">
-                    ✓ Image Selected: {selectedImage.name}
+                     Image Selected: {selectedImage.name}
                   </p>
                 )}
               </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 export default function AboutUsPage() {
   return (
@@ -20,7 +21,7 @@ export default function AboutUsPage() {
       {/* Pillars Section (Mission, Vision, Purpose) */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 py-6">
         <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
-          <div className="text-2xl mb-3">🎯</div>
+          <div className="text-2xl mb-3"><Icon name="target" /></div>
           <h3 className="text-base font-black text-slate-900 tracking-tight">ተልዕኮ</h3>
           <p className="text-slate-500 text-xs mt-2 leading-relaxed">
             To provide precise management infrastructure, optimizing data accuracy and workflow pipelines while offering accessible communication channels.
@@ -28,7 +29,7 @@ export default function AboutUsPage() {
         </div>
 
         <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
-          <div className="text-2xl mb-3">👁️</div>
+          <div className="text-2xl mb-3"><Icon name="eye" /></div>
           <h3 className="text-base font-black text-slate-900 tracking-tight">ራዕይ</h3>
           <p className="text-slate-500 text-xs mt-2 leading-relaxed">
             A technologically unified ecosystem where digital resources, leadership structures, and internal announcements are securely integrated in real time.
@@ -36,7 +37,7 @@ export default function AboutUsPage() {
         </div>
 
         <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
-          <div className="text-2xl mb-3">⚙️</div>
+          <div className="text-2xl mb-3"><Icon name="settings" /></div>
           <h3 className="text-base font-black text-slate-900 tracking-tight">Core Values</h3>
           <p className="text-slate-500 text-xs mt-2 leading-relaxed">
             Strict structural validation, absolute functional clarity, open accessibility, and high-performance execution built on modern web runtimes.

@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 
-// 🔽 ADDED: GET handler to look up your Posts from the database
+//  ADDED: GET handler to look up your Posts from the database
 export async function GET(request: NextRequest) {
   try {
     // Fetches your posts out of the prisma.post model sorted by newest
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// 📄 KEEPING YOUR ORIGINAL POST LOGIC COMPLETELY INTACT:
+//  KEEPING YOUR ORIGINAL POST LOGIC COMPLETELY INTACT:
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();

@@ -16,7 +16,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       );
     }
 
-    // 🌟 Wipes the record out of your prisma.post model layout table
+    //  Wipes the record out of your prisma.post model layout table
     await prisma.post.delete({
       where: { id },
     });

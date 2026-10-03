@@ -21,6 +21,31 @@ model Post {
   mediaUrl    String?
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
+  views       Int      @default(0)
+  likes       PostLike[]
+  comments    Comment[]
+}
+
+model PostLike {
+  id        String   @id @default(uuid())
+  postId    String
+  visitorId String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, visitorId])
+  @@index([postId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  postId    String
+  name      String
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
 }
 
 model Resource {
