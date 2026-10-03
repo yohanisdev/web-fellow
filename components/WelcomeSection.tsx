@@ -11,9 +11,18 @@ const BACKGROUND_IMAGES = [
   "/welcome/20260929_081029.jpg"
 ];
 
+const AMHARIC_WELCOME_MESSAGES = [
+  "የ ሰላም አምላክ ራሱ ሁለንተናቹን ይቀድስ ፤ መንፈሳቹ ፤ነፍሳቹና ስጋቹ ጌታችን እየሱስ ክርስቶስ በምመጣበት ግዘ ያለ ነቀፋ ይጠበቁ።",
+  "እነሆ፥ ወንድሞች በአንድነት መኖር እንዴት መልካምና ደስ የሚያሰኝ ነው።",
+  "በክርስቶስ አንድ ሆነን በእምነት፣ በፍቅርና በአገልግሎት እናድጋለን።",
+];
+
 export default function WelcomeSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [typedCharacters, setTypedCharacters] = useState(0);
+  const [welcomeRevealed, setWelcomeRevealed] = useState(false);
 
   // 1. Handle Background Slideshow Interval
   useEffect(() => {
@@ -23,6 +32,42 @@ export default function WelcomeSection() {
 
     return () => clearInterval(timer);
   }, []);
+
+  // Type each Amharic message, pause, then erase it before moving to the next.
+  useEffect(() => {
+    if (!welcomeRevealed) return;
+
+    const message = AMHARIC_WELCOME_MESSAGES[currentMessageIndex];
+    let timer: number;
+    let character = 0;
+
+    setTypedCharacters(0);
+
+    const typeNextCharacter = () => {
+      character += 1;
+      setTypedCharacters(character);
+
+      if (character < message.length) {
+        timer = window.setTimeout(typeNextCharacter, 42);
+      } else {
+        timer = window.setTimeout(eraseNextCharacter, 2600);
+      }
+    };
+
+    const eraseNextCharacter = () => {
+      character -= 1;
+      setTypedCharacters(character);
+
+      if (character > 0) {
+        timer = window.setTimeout(eraseNextCharacter, 20);
+      } else {
+        setCurrentMessageIndex((index) => (index + 1) % AMHARIC_WELCOME_MESSAGES.length);
+      }
+    };
+
+    timer = window.setTimeout(typeNextCharacter, 1000);
+    return () => window.clearTimeout(timer);
+  }, [currentMessageIndex, welcomeRevealed]);
 
     // 2. Core GSAP Animations
   useEffect(() => {
@@ -131,9 +176,10 @@ export default function WelcomeSection() {
           duration: 0.8,
           stagger: 0.15,
           ease: "power2.out",
-        },
-        "-=1.4"
+        }
       );
+
+      mainTimeline.call(() => setWelcomeRevealed(true));
 
     }, containerRef);
 
@@ -234,8 +280,12 @@ export default function WelcomeSection() {
           <h1 className="welcome-text-fade opacity-0 text-3xl md:text-5xl font-black tracking-tight text-white leading-tight">
             Welcome to <span className="text-[#d6a019]">JUAC EvaSUE</span>
           </h1>
-          <p className="welcome-text-fade opacity-0 mt-5 text-sm md:text-base text-slate-200 leading-relaxed max-w-xl mx-auto lg:mx-0 drop-shadow-sm">
-            የ ሰላም አምላክ ራሱ ሁለንተናቹን ይቀድስ ፤ መንፈሳቹ ፤ነፍሳቹና ስጋቹ ጌታችን እየሱስ ክርስቶስ በምመጣበት ግዘ ያለ ነቀፋ ይጠበቁ።
+          <p
+            aria-live="polite"
+            className="mt-5 min-h-20 text-sm md:text-base text-[#d6a019] leading-relaxed max-w-xl mx-auto lg:mx-0 drop-shadow-sm"
+          >
+            {AMHARIC_WELCOME_MESSAGES[currentMessageIndex].slice(0, typedCharacters)}
+            <span aria-hidden="true" className="ml-0.5 animate-pulse">|</span>
           </p>
         
         </div>

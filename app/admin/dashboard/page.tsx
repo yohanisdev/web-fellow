@@ -34,7 +34,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Main Feature Management Layout Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4">
         
         {/* Module Card 1: Feed Announcements */}
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
@@ -124,6 +124,24 @@ export default function AdminDashboardPage() {
               <Icon name="settings" className="inline mr-2" size={14} />Manage Leaders
             </button>
           </div>
+        </div>
+
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="w-10 h-10 bg-violet-50 text-violet-600 rounded-xl flex items-center justify-center font-bold text-lg mb-4">
+              <Icon name="calendar" />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900 mb-1">Weekly Programs</h3>
+            <p className="text-slate-500 text-xs leading-relaxed">
+              Keep weekly gathering names, days, times, and icons current on the home page.
+            </p>
+          </div>
+          <button
+            onClick={() => router.push("/admin/dashboard/manage-programs")}
+            className="mt-6 w-full text-center text-xs font-bold bg-slate-900 text-white py-2.5 rounded-xl hover:bg-slate-800 transition-colors"
+          >
+            <Icon name="settings" className="inline mr-2" size={14} />Manage Programs
+          </button>
         </div>
 
       </div>

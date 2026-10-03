@@ -1,36 +1,20 @@
 import Icon, { type IconName } from "@/components/Icon";
 
-const programs: {
-  day: string;
+export interface ProgramCardData {
+  id: string;
   title: string;
+  day: string;
   time: string;
-  icon: IconName;
-  accent: string;
-}[] = [
-  {
-    day: "Friday",
-    title: "General Fellowship",
-    time: "12:00 LT",
-    icon: "users",
-    accent: "bg-blue-50 text-blue-700 ring-blue-100",
-  },
-  {
-    day: "Wednesday",
-    title: "Bible Study",
-    time: "12:30 LT",
-    icon: "book",
-    accent: "bg-amber-50 text-amber-700 ring-amber-100",
-  },
-  {
-    day: "Thursday",
-    title: "Prayer Time",
-    time: "12:30 LT",
-    icon: "prayer",
-    accent: "bg-emerald-50 text-emerald-700 ring-emerald-100",
-  },
+  icon: string;
+}
+
+const accents = [
+  "bg-blue-50 text-blue-700 ring-blue-100",
+  "bg-amber-50 text-amber-700 ring-amber-100",
+  "bg-emerald-50 text-emerald-700 ring-emerald-100",
 ];
 
-export default function ProgramSection() {
+export default function ProgramSection({ programs }: { programs: ProgramCardData[] }) {
   return (
     <section className="relative isolate w-full overflow-hidden bg-slate-900 py-16 sm:py-20 border-t border-slate-700">
       <video
@@ -62,13 +46,13 @@ export default function ProgramSection() {
         </div>
 
         <div className="flex w-full flex-col gap-4 lg:order-1 lg:mr-auto lg:max-w-2xl">
-          {programs.map((program) => (
+          {programs.length ? programs.map((program, index) => (
             <article
-              key={program.title}
+              key={program.id}
               className="group relative flex items-center gap-4 sm:gap-5 overflow-hidden bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-lg hover:translate-x-1 transition-all duration-300"
             >
-              <div className={`w-12 h-12 shrink-0 rounded-2xl ring-1 flex items-center justify-center ${program.accent}`}>
-                <Icon name={program.icon} size={23} />
+              <div className={`w-12 h-12 shrink-0 rounded-2xl ring-1 flex items-center justify-center ${accents[index % accents.length]}`}>
+                <Icon name={program.icon as IconName} size={23} />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
@@ -84,7 +68,11 @@ export default function ProgramSection() {
               </div>
               <div className="absolute bottom-0 left-0 h-1 w-0 bg-fellowship-gold group-hover:w-full transition-all duration-300" />
             </article>
-          ))}
+          )) : (
+            <p className="rounded-2xl border border-white/20 bg-white/10 p-5 text-sm text-white/80">
+              Program schedule will be announced soon.
+            </p>
+          )}
         </div>
       </div>
     </section>

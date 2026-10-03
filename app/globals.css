@@ -19,21 +19,3 @@ body {
   background-color: #f8fafc; /* Standardizing light slate bg across all views */
   color: #1e293b;
 }
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 35s linear infinite;
-}
-
-/* Pause the flow when a user hovers over an image */
-.hover-pause:hover .animate-marquee {
-  animation-play-state: paused;
-}

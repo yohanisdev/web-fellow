@@ -72,6 +72,18 @@ model Leader {
   createdAt   DateTime @default(now())
 }
 
+model Program {
+  id        String   @id @default(uuid())
+  title     String
+  day       String
+  time      String
+  icon      String   @default("users")
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Setting {
   id           String @id @default("global_config")
   aboutEnglish String @db.Text
