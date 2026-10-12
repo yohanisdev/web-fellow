@@ -19,7 +19,7 @@ export default async function AnnouncementPage({ params }: Params) {
     where: { id, isPublished: true },
     include: {
       _count: { select: { likes: true } },
-      comments: { orderBy: { createdAt: "desc" } },
+      comments: { orderBy: { createdAt: "desc" }, take: 100 },
     },
   });
   if (!post) notFound();
